@@ -5,7 +5,7 @@ from openai import OpenAI
 MODEL = "gpt-4o-mini"
 SYSTEM_PROMPT = (
     "You are an AI assistant. Generate concise Git branch names based on the user's input. "
-    "Use hyphens to separate words, and include relevant context such as 'feature', 'fix', "
+    "Use hyphens to separate words, and include relevant context such as 'feature', 'fix', 'docs', "
     "'hotfix', 'refactor', 'chore', or other common prefixes, followed by a brief description. "
     "Keep it short and readable."
 )
