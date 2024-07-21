@@ -1,7 +1,7 @@
 import click
 import os
 from click.core import Context
-from bb.commands import pull_request, branch_name
+from bb.commands import pull_request, get_branch_name
 from bb.openai import OpenAIClient
 
 
@@ -21,4 +21,4 @@ def cli(ctx: Context):
 
 
 cli.add_command(pull_request)
-cli.add_command(branch_name)
+cli.add_command(get_branch_name)
