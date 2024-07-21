@@ -4,10 +4,11 @@ from bb.openai import OpenAIClient
 import subprocess
 
 SYSTEM_PROMPT = (
-    "You are an AI assistant. Generate concise Git branch names based on the user's input. "
+    "You are an AI assistant. Generate concise Git branch names based on the user's input, which describes the task or update. "
     "Use hyphens to separate words, and include relevant context such as 'feature', 'fix', 'docs', "
     "'hotfix', 'refactor', 'chore', or other common prefixes, followed by a brief description. "
-    "Keep it short and readable. Do not use backticks (`) in the branch name."
+    "Always imagine and create a suitable branch name based on the details provided. "
+    "Keep it short and readable, and do not use backticks (`) in the branch name."
 )
 
 
