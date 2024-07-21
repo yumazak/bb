@@ -19,9 +19,11 @@ SYSTEM_PROMPT_BRANCH_NAME = (
     "Keep it short and readable. Ensure the branch name reflects the main changes or purpose indicated by the diff."
 )
 
+
 SYSTEM_PROMPT_PR_NAME = (
-    "You are an AI assistant. Based on the provided diff, generate a concise pull request name with a relevant prefix such as 'feat', 'fix', 'refactor', or other common prefixes. "
+    "You are an AI assistant. Based on the provided diff, generate a concise pull request name following the GitMoji specification with a relevant prefix such as 'feat', 'fix', 'refactor', or other common prefixes. "
     "Output should be in Japanese. "
+    "The format should be {prefix}:{emoji} {title}. "
     "Only output the pull request title and nothing else. "
     "Exclude any explanations, justifications, or conclusions."
 )
