@@ -1,7 +1,7 @@
 import click
 from click.core import Context
 from bb.openai import OpenAIClient
-import subprocess
+from bb.git import get_diff
 from rich.console import Console
 from rich.panel import Panel
 from rich.text import Text
@@ -30,15 +30,6 @@ SYSTEM_PROMPT_PR_NAME = (
     "Only output the pull request title and nothing else. "
     "Exclude any explanations, justifications, or conclusions."
 )
-
-
-def get_diff(branch_name: str) -> str:
-    result = subprocess.run(
-        ["git", "diff", "-w", "--ignore-blank-lines", "-U0", branch_name],
-        capture_output=True,
-        text=True,
-    )
-    return result.stdout
 
 
 @click.command(name="pr")

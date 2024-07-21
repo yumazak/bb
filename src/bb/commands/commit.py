@@ -1,10 +1,10 @@
 import click
 from click.core import Context
 from bb.openai import OpenAIClient
+from bb.git import get_diff
 from rich.console import Console
 from rich.panel import Panel
 from rich.text import Text
-import subprocess
 import pyperclip
 
 SYSTEM_PROMPT = (
@@ -15,15 +15,6 @@ SYSTEM_PROMPT = (
 )
 
 
-def get_diff() -> str:
-    result = subprocess.run(
-        ["git", "diff", "-w", "--ignore-blank-lines", "-U0", "HEAD"],
-        capture_output=True,
-        text=True,
-    )
-    return result.stdout
-
-
 @click.command(name="co")
 @click.pass_context
 def get_commit_message(ctx: Context):
@@ -32,7 +23,7 @@ def get_commit_message(ctx: Context):
     client: OpenAIClient = ctx.obj["client"]
     console: Console = ctx.obj["console"]
 
-    diff = get_diff()
+    diff = get_diff("HEAD")
     if not diff:
         click.echo("No changes found.")
         return
