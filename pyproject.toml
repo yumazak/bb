@@ -8,6 +8,7 @@ authors = [
 dependencies = [
     "openai>=1.36.0",
     "click>=8.1.7",
+    "pyperclip>=1.9.0",
 ]
 readme = "README.md"
 requires-python = ">= 3.8"

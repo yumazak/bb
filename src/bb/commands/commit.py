@@ -2,6 +2,7 @@ import click
 from click.core import Context
 from bb.openai import OpenAIClient
 import subprocess
+import pyperclip
 
 SYSTEM_PROMPT = (
     "You are an AI assistant. Based on the provided diff, generate a concise commit message. "
@@ -34,7 +35,10 @@ def get_commit_message(ctx: Context):
     click.echo("\nSuggested Commit Message:")
     click.echo(commit_message)
 
-    if not click.confirm("\nConfirm the result?", default=True):
+    if click.confirm("\nConfirm the result?", default=True):
+        pyperclip.copy(commit_message)
+        click.echo("Commit message copied to clipboard.")
+    else:
         client.clear_history()
         ctx.forward(get_commit_message)
     return

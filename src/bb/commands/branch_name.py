@@ -1,6 +1,7 @@
 import click
 from click.core import Context
 from bb.openai import OpenAIClient
+import pyperclip
 
 SYSTEM_PROMPT = (
     "You are an AI assistant. Generate concise Git branch names based on the user's input, which describes the task or update. "
@@ -20,6 +21,9 @@ def get_branch_name(ctx: Context, description: str):
     branch_name = client.chat(SYSTEM_PROMPT, description)
     click.echo(branch_name)
 
-    if not click.confirm("\nConfirm the result?", default=True):
+    if click.confirm("\nConfirm the result?", default=True):
+        pyperclip.copy(branch_name)
+        click.echo("Commit message copied to clipboard.")
+    else:
         client.clear_history()
         ctx.forward(get_branch_name)
