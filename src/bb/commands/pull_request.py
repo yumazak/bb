@@ -86,5 +86,5 @@ def pull_request(ctx: Context, branch: str, title: bool, name: bool):
 
     if not click.confirm("\nConfirm the result?"):
         client.clear_history()
-        ctx.invoke(pull_request, branch=branch, title=title, name=name)
+        ctx.forward(pull_request)
     return
