@@ -14,7 +14,15 @@ class OpenAIClient:
     def add_to_history(self, role: str, content: str):
         self.conversation_history.append({"role": role, "content": content})
 
-    def chat(self, system_prompt: str = None, user_prompt: str = None) -> str:
+    def clear_history(self):
+        self.conversation_history = []
+
+    def chat(
+        self,
+        system_prompt: str = None,
+        user_prompt: str = None,
+        temperature: float = 0.7,
+    ) -> str:
         if not system_prompt and not user_prompt:
             raise ValueError("Provide at least one prompt")
         if system_prompt:
@@ -25,6 +33,7 @@ class OpenAIClient:
         completion = self.client.chat.completions.create(
             model=self.model,
             messages=self.conversation_history,
+            temperature=temperature,
         )
         content = completion.choices[0].message.content
         self.add_to_history("system", content)

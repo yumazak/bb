@@ -69,7 +69,7 @@ def pull_request(ctx: Context, branch: str, title: bool, name: bool):
 
     # プルリクエストの説明を生成
     diff_description = client.chat(SYSTEM_PROMPT_DESCRIPTION, diff)
-    click.echo("Changes:")
+    click.echo("\nChanges:")
     click.echo(diff_description)
 
     if title:
@@ -82,4 +82,7 @@ def pull_request(ctx: Context, branch: str, title: bool, name: bool):
         click.echo("\nBranch Name:")
         click.echo(branch_name)
 
+    if not click.confirm("\nConfirm the result?"):
+        client.clear_history()
+        ctx.invoke(pull_request, branch=branch, title=title, name=name)
     return
