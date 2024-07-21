@@ -1,9 +1,7 @@
 import click
 import os
-from openai import OpenAI
-import subprocess
 from click.core import Context
-from bb.commands import description, branch_name
+from bb.commands import pull_request, branch_name
 from bb.openai import OpenAIClient
 
 
@@ -22,5 +20,5 @@ def cli(ctx: Context):
     ctx.obj["client"] = client
 
 
-cli.add_command(description)
+cli.add_command(pull_request)
 cli.add_command(branch_name)
