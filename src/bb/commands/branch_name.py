@@ -19,3 +19,7 @@ def branch_name(ctx: Context, description: str):
 
     branch_name = client.chat(SYSTEM_PROMPT, description)
     click.echo(branch_name)
+
+    if not click.confirm("\nConfirm the result?"):
+        client.clear_history()
+        ctx.invoke(branch_name, description=description)
