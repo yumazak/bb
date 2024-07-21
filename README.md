@@ -36,10 +36,10 @@ $ bb pr -b <branch> [-t] [-n]
 -n, --name：ブランチ名を生成するフラグ。
 
 # プルリクエストの変更点のみを生成
-$ bb desc -b main
+$ bb pr -b main
 
 # プルリクエストの変更点とブランチ名を生成
-$ bb desc -b main -n
+$ bb pr -b main -n
 
 # プルリクエストのタイトルと変更点を生成
 $ bb pr -b main -t
