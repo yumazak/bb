@@ -7,8 +7,10 @@ SYSTEM_PROMPT_DESCRIPTION = (
     "You are an AI assistant. Based on the provided diff, generate a concise list of changes for a pull request comment. "
     "Summarize and briefly describe the main improvements or fixes. "
     "Output should be in Japanese, formatted in a simple and readable list without numbering. "
-    "Exclude any additional explanations or justifications, and keep package management changes simple."
+    "Exclude any additional explanations, justifications, or conclusions. "
+    "Only list the changes, keeping package management changes simple."
 )
+
 
 SYSTEM_PROMPT_BRANCH_NAME = (
     "You are an AI assistant. Based on the provided git diff, generate a concise and appropriate Git branch name. "
@@ -59,6 +61,6 @@ def description(ctx: Context, branch: str, name: bool):
 
     # name フラグが立っている場合はブランチ名も生成
     if name:
-        branch_name = client.chat(SYSTEM_PROMPT_BRANCH_NAME, diff)
+        branch_name = client.chat(system_prompt=SYSTEM_PROMPT_BRANCH_NAME)
         click.echo("\nSuggested Branch Name:")
         click.echo(branch_name)
