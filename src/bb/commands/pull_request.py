@@ -41,11 +41,11 @@ SYSTEM_PROMPT_PR_NAME = (
     help="Diff with this branch.",
 )
 @click.option(
-    "-t",
-    "--title",
+    "-d",
+    "--description",
     is_flag=True,
     default=False,
-    help="Generate a pull request title based on the diff.",
+    help="Generate a pull request description, based on the diff.",
 )
 @click.option(
     "-n",
@@ -55,28 +55,30 @@ SYSTEM_PROMPT_PR_NAME = (
     help="Generate a branch name based on the diff.",
 )
 @click.pass_context
-def pull_request(ctx: Context, branch: str, title: bool, name: bool):
-    """Generate a pull request description, title, and branch name based on the diff."""
+def pull_request(ctx: Context, branch: str, description: bool, name: bool):
+    """Generate a pull request title, description, and branch name based on the diff."""
 
     client: OpenAIClient = ctx.obj["client"]
     console: Console = ctx.obj["console"]
 
     diff = get_diff(branch)
     if not diff:
-        console.print("[bold red]No changes found.[/bold red]")
+        console.print(Text("No changes found.", style="red"))
         return
 
-    diff_description = client.chat(SYSTEM_PROMPT_DESCRIPTION, diff)
-    console.print(Panel(Text("Pull Request Description", style="green"), expand=False))
-    console.print(diff_description)
+    pr_title = client.chat(SYSTEM_PROMPT_PR_NAME, diff)
+    console.print(Panel(Text("Pull Request Title", style="blue"), expand=False))
+    console.print(pr_title)
 
-    if title:
-        pr_title = client.chat(SYSTEM_PROMPT_PR_NAME, diff)
-        console.print(Panel(Text("Pull Request Title", style="blue"), expand=False))
-        console.print(pr_title)
+    if description:
+        diff_description = client.chat(system_prompt=SYSTEM_PROMPT_DESCRIPTION)
+        console.print(
+            Panel(Text("Pull Request Description", style="green"), expand=False)
+        )
+        console.print(diff_description)
 
     if name:
-        branch_name = client.chat(SYSTEM_PROMPT_BRANCH_NAME, diff)
+        branch_name = client.chat(system_prompt=SYSTEM_PROMPT_BRANCH_NAME)
         console.print(Panel(Text("Branch Name", style="cyan"), expand=False))
         console.print(branch_name)
 
