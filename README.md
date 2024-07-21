@@ -30,9 +30,9 @@ $ rye install .
 Gitの差分からプルリクエストの変更点を生成します。
 
 ```bash
-$ bb pr -b <branch> [-t] [-n]
+$ bb pr -b <branch> [-d] [-n]
 -b, --branch：比較対象のブランチ（デフォルトは develop）。
--t, --title：プルリクエストのタイトルを生成するフラグ。
+-d, --description：プルリクエストの説明を生成するフラグ。
 -n, --name：ブランチ名を生成するフラグ。
 
 # プルリクエストの変更点のみを生成
@@ -42,10 +42,10 @@ $ bb pr -b main
 $ bb pr -b main -n
 
 # プルリクエストのタイトルと変更点を生成
-$ bb pr -b main -t
+$ bb pr -b main -d
 
 # プルリクエストのタイトル、変更点、ブランチ名を生成
-$ bb pr -b main -tn
+$ bb pr -b main -dn
 ```
 
 #### `bn` コマンド
