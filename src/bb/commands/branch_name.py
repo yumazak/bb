@@ -1,6 +1,9 @@
 import click
 from click.core import Context
 from bb.openai import OpenAIClient
+from rich.text import Text
+from rich.console import Console
+from rich.panel import Panel
 import pyperclip
 
 SYSTEM_PROMPT = (
@@ -19,13 +22,16 @@ def get_branch_name(ctx: Context, description: str):
     """Generate a branch name based on the input."""
 
     client: OpenAIClient = ctx.obj["client"]
+    console: Console = ctx.obj["console"]
 
     branch_name = client.chat(SYSTEM_PROMPT, description)
-    click.echo(branch_name)
+    console.print(Panel(Text("Suggested Branch Name", style="green"), expand=False))
+    console.print(branch_name)
 
     if click.confirm("\nConfirm the result?", default=True):
         pyperclip.copy(branch_name)
-        click.echo("Commit message copied to clipboard.")
+        console.print(Text("Branch name copied to clipboard!", style="green"))
+
     else:
         client.clear_history()
         ctx.forward(get_branch_name)

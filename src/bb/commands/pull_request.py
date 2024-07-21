@@ -2,6 +2,9 @@ import click
 from click.core import Context
 from bb.openai import OpenAIClient
 import subprocess
+from rich.console import Console
+from rich.panel import Panel
+from rich.text import Text
 
 SYSTEM_PROMPT_DESCRIPTION = (
     "You are an AI assistant. Based on the provided diff, generate a concise list of changes for a pull request comment. "
@@ -65,26 +68,26 @@ def pull_request(ctx: Context, branch: str, title: bool, name: bool):
     """Generate a pull request description, title, and branch name based on the diff."""
 
     client: OpenAIClient = ctx.obj["client"]
+    console: Console = ctx.obj["console"]
 
     diff = get_diff(branch)
     if not diff:
-        click.echo("No changes found.")
+        console.print("[bold red]No changes found.[/bold red]")
         return
 
-    # プルリクエストの説明を生成
     diff_description = client.chat(SYSTEM_PROMPT_DESCRIPTION, diff)
-    click.echo("\nChanges:")
-    click.echo(diff_description)
+    console.print(Panel(Text("Pull Request Description", style="green"), expand=False))
+    console.print(diff_description)
 
     if title:
-        pr_title = client.chat(system_prompt=SYSTEM_PROMPT_PR_NAME)
-        click.echo("\nPull Request Title:")
-        click.echo(pr_title)
+        pr_title = client.chat(SYSTEM_PROMPT_PR_NAME, diff)
+        console.print(Panel(Text("Pull Request Title", style="blue"), expand=False))
+        console.print(pr_title)
 
     if name:
-        branch_name = client.chat(system_prompt=SYSTEM_PROMPT_BRANCH_NAME)
-        click.echo("\nBranch Name:")
-        click.echo(branch_name)
+        branch_name = client.chat(SYSTEM_PROMPT_BRANCH_NAME, diff)
+        console.print(Panel(Text("Branch Name", style="cyan"), expand=False))
+        console.print(branch_name)
 
     if not click.confirm("\nConfirm the result?", default=True):
         client.clear_history()
