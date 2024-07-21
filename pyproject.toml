@@ -1,7 +1,7 @@
 [project]
 name = "bb"
 version = "0.1.0"
-description = "Add your description here"
+description = "bb is a tool that utilizes OpenAI's API (gpt-4o-mini) to automatically generate Git branch names and pull request descriptions based on user input and Git diff information."
 authors = [
     { name = "yumazak", email = "12002113+yumazak@users.noreply.github.com" }
 ]
