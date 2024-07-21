@@ -1,6 +1,7 @@
 import os
 import sys
-from openai import OpenAI
+from bb.openai import OpenAIClient
+from bb.cli import cli
 
 MODEL = "gpt-4o-mini"
 SYSTEM_PROMPT = (
@@ -9,13 +10,6 @@ SYSTEM_PROMPT = (
     "'hotfix', 'refactor', 'chore', or other common prefixes, followed by a brief description. "
     "Keep it short and readable."
 )
-
-
-def get_openai_client():
-    api_key = os.environ.get("OPENAI_API_KEY")
-    if not api_key:
-        raise ValueError("OPENAI_API_KEY environment variable is not set")
-    return OpenAI(api_key=api_key)
 
 
 def build_branch_name(client, details: str) -> str:
@@ -30,12 +24,6 @@ def build_branch_name(client, details: str) -> str:
 
 
 def main() -> int:
-    if len(sys.argv) < 2:
-        print("Usage: bb <details>")
-        return 1
+    cli()
 
-    details = sys.argv[1]
-    client = get_openai_client()
-    branch_name = build_branch_name(client, details)
-    print(branch_name)
     return 0
