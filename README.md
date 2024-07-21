@@ -48,12 +48,18 @@ $ bb pr -b main -t
 $ bb pr -b main -tn
 ```
 
-#### `name` コマンド
+#### `bn` コマンド
 ユーザーのインプットからシンプルなブランチ名を生成します。
 
 ```bash
-$ bb name <description>
+$ bb bn <description>
 
-$ bb name 新しい検索UIの追加
+$ bb bn 新しい検索UIの追加
 #output feature/add-new-search-ui
+```
+#### `co` コマンド
+Gitの差分からコミットメッセージを生成します。
+
+```bash
+$ bb co
 ```

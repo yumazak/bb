@@ -12,10 +12,12 @@ SYSTEM_PROMPT = (
 )
 
 
-@click.command(name="name")
+@click.command(name="bn")
 @click.argument("description", nargs=1)
 @click.pass_context
 def get_branch_name(ctx: Context, description: str):
+    """Generate a branch name based on the input."""
+
     client: OpenAIClient = ctx.obj["client"]
 
     branch_name = client.chat(SYSTEM_PROMPT, description)
