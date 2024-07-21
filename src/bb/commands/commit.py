@@ -21,9 +21,11 @@ def get_diff() -> str:
     return result.stdout
 
 
-@click.command(name="commit")
+@click.command(name="co")
 @click.pass_context
 def get_commit_message(ctx: Context):
+    """Generate a commit message based on the diff."""
+
     client: OpenAIClient = ctx.obj["client"]
 
     diff = get_diff()

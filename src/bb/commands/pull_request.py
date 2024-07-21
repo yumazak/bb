@@ -62,6 +62,8 @@ def get_diff(branch_name: str) -> str:
 )
 @click.pass_context
 def pull_request(ctx: Context, branch: str, title: bool, name: bool):
+    """Generate a pull request description, title, and branch name based on the diff."""
+
     client: OpenAIClient = ctx.obj["client"]
 
     diff = get_diff(branch)
