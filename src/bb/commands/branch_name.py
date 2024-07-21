@@ -20,6 +20,6 @@ def get_branch_name(ctx: Context, description: str):
     branch_name = client.chat(SYSTEM_PROMPT, description)
     click.echo(branch_name)
 
-    if not click.confirm("\nConfirm the result?"):
+    if not click.confirm("\nConfirm the result?", default=True):
         client.clear_history()
         ctx.forward(get_branch_name)

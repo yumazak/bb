@@ -84,7 +84,7 @@ def pull_request(ctx: Context, branch: str, title: bool, name: bool):
         click.echo("\nBranch Name:")
         click.echo(branch_name)
 
-    if not click.confirm("\nConfirm the result?"):
+    if not click.confirm("\nConfirm the result?", default=True):
         client.clear_history()
         ctx.forward(pull_request)
     return

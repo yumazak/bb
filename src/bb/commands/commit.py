@@ -34,7 +34,7 @@ def get_commit_message(ctx: Context):
     click.echo("\nSuggested Commit Message:")
     click.echo(commit_message)
 
-    if not click.confirm("\nConfirm the result?"):
+    if not click.confirm("\nConfirm the result?", default=True):
         client.clear_history()
         ctx.forward(get_commit_message)
     return
